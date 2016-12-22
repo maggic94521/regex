@@ -34,8 +34,7 @@ public class Parser {
         List<Node> preNodes = new ArrayList<>();
         headNodes.add(currentNode);
         preNodes.add(startNode);
-
-
+        
         for(int i = 0; i < regex.length(); i++) {
             char currentChar = regex.charAt(i);
             if (currentChar == '*') {
