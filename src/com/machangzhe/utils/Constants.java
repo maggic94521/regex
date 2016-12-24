@@ -10,5 +10,6 @@ public class Constants {
         public static final String START = "start";
         public static final String MIDDLE = "middle";
         public static final String END = "end";
+        public static final String START_AND_END = "start_and_end";
     }
 }

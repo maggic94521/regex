@@ -9,9 +9,9 @@ import java.util.List;
 public class NFANode {
     public int id;
     public String type;
-    public List<Path> paths;
+    public List<NFAPath> paths;
 
-    public NFANode(int id, String type, List<Path> path) {
+    public NFANode(int id, String type, List<NFAPath> path) {
         this.type = type;
         if (path != null) {
             this.paths = path;
