@@ -2,7 +2,7 @@ package com.machangzhe.parser;
 
 
 import com.machangzhe.entities.NFA;
-import com.machangzhe.entities.Node;
+import com.machangzhe.entities.NFANode;
 import com.machangzhe.entities.Path;
 import com.machangzhe.utils.Constants;
 
@@ -17,21 +17,21 @@ import java.util.Map;
 public class Parser {
     public static NFA parseRegex(String regex) {
         NFA nfa = new NFA();
-        Node startNode = new Node(nfa.nodeList.size(), Constants.NodeType.START, null);
+        NFANode startNode = new NFANode(nfa.nodeList.size(), Constants.NodeType.START, null);
         nfa.startNode = startNode;
         nfa.nodeList.add(startNode);
-        Node currentNode = startNode;
+        NFANode currentNode = startNode;
 
         Path tempPath = new Path(null, Constants.EPSON);
         currentNode.paths.add(tempPath);
 
-        currentNode = new Node(nfa.nodeList.size(), Constants.NodeType.MIDDLE, null);
+        currentNode = new NFANode(nfa.nodeList.size(), Constants.NodeType.MIDDLE, null);
         nfa.nodeList.add(currentNode);
         tempPath.targetNode = currentNode;
 
-        List<Node> headNodes = new ArrayList<>();
-        Map<Integer, Node> tailNodes = new HashMap<>();
-        List<Node> preNodes = new ArrayList<>();
+        List<NFANode> headNodes = new ArrayList<>();
+        Map<Integer, NFANode> tailNodes = new HashMap<>();
+        List<NFANode> preNodes = new ArrayList<>();
         headNodes.add(currentNode);
         preNodes.add(startNode);
         
@@ -47,7 +47,7 @@ public class Parser {
                 tempPath = new Path(null, Constants.EPSON);
                 currentNode.paths.add(tempPath);
                 if (tailNodes.get(headNodes.get(headNodes.size() - 1).id) == null) {
-                    currentNode = new Node(nfa.nodeList.size(), Constants.NodeType.MIDDLE, null);
+                    currentNode = new NFANode(nfa.nodeList.size(), Constants.NodeType.MIDDLE, null);
                     nfa.nodeList.add(currentNode);
                     tempPath.targetNode = currentNode;
                     tailNodes.put(headNodes.get(headNodes.size() - 1).id, currentNode);
@@ -59,12 +59,12 @@ public class Parser {
                 headNodes.add(currentNode);
                 preNodes.remove(preNodes.size() - 1);
                 preNodes.add(currentNode);
-                preNodes.add(Node.fakeNode());
+                preNodes.add(NFANode.fakeNode());
             } else if (currentChar == ')') {
                 tempPath = new Path(null, Constants.EPSON);
                 currentNode.paths.add(tempPath);
                 if (tailNodes.get(headNodes.get(headNodes.size() - 1).id) == null) {
-                    currentNode = new Node(nfa.nodeList.size(), Constants.NodeType.MIDDLE, null);
+                    currentNode = new NFANode(nfa.nodeList.size(), Constants.NodeType.MIDDLE, null);
                     nfa.nodeList.add(currentNode);
                     tempPath.targetNode = currentNode;
                 } else {
@@ -80,7 +80,7 @@ public class Parser {
 
                 tempPath = new Path(null, currentChar);
                 currentNode.paths.add(tempPath);
-                currentNode = new Node(nfa.nodeList.size(), Constants.NodeType.MIDDLE, null);
+                currentNode = new NFANode(nfa.nodeList.size(), Constants.NodeType.MIDDLE, null);
                 nfa.nodeList.add(currentNode);
                 tempPath.targetNode = currentNode;
             }
@@ -95,7 +95,7 @@ public class Parser {
         tempPath = new Path(null, Constants.EPSON);
         currentNode.paths.add(tempPath);
 
-        Node endNode = new Node(nfa.nodeList.size(), Constants.NodeType.END, null);
+        NFANode endNode = new NFANode(nfa.nodeList.size(), Constants.NodeType.END, null);
         nfa.nodeList.add(endNode);
         tempPath.targetNode = endNode;
         return nfa;

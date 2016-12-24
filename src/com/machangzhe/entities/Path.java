@@ -8,9 +8,9 @@ import java.util.List;
  */
 public class Path {
     public List<Character> allowChars;
-    public Node targetNode;
+    public NFANode targetNode;
 
-    public Path(Node target, Character... allowChar) {
+    public Path(NFANode target, Character... allowChar) {
         this.targetNode = target;
         this.allowChars = new ArrayList<>();
         if (allowChar != null) {
